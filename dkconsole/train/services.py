@@ -70,7 +70,6 @@ class TrainService():
                 'donkeycar_version': str(vehicle_service.get_donkeycar_version())
             }
         )
-
         logger.debug("Posting job to HQ")
         r = requests.post(
             cls.SUBMIT_JOB_URL,

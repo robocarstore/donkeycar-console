@@ -42,6 +42,15 @@ sudo ln -s gunicorn.service /etc/systemd/system/gunicorn.service
 
 ### Setup environment
 
+Pls don't use m$ windows
+
+### WSL2
+```angular2html
+wget get https://repo.anaconda.com/archive/Anaconda3-2021.05-Linux-x86_64.sh
+./Anaconda*-*-Linux-x86_64.sh
+q
+```
+
 #### Setup conda
 
 ```
@@ -78,6 +87,9 @@ python manage.py runserver 0.0.0.0:8000
 
 ```
 pytest -s -v dkconsole/data/test_service.py -k test_xxx
+
+pytest -s -v dkconsole/train/test_integration.py -k test_submit_job --runslow
+pytest -s -v dkconsole/train/test_integration.py -k test_refresh_jobs --runslow
 ```
 
 ## Changes

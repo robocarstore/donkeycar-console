@@ -18,9 +18,8 @@ from rest_framework import status
 class TestTrainIntegration(TestCase):
     def setUp(self):
         self.data_dir = Path(settings.DATA_DIR)
-        self.tub_paths = [str(self.data_dir / "tub_18_19-04-06"),
-                          str(self.data_dir / "tub_6_20-03-31")]
-
+        self.tub_paths = ["/mnt/c/Users/Eugene/Documents/work/donkeycar-console/dkconsole/mycar4_test/data/tub_2_21-12-07"]
+        self.job_uuids = ["", ""]
     # @pytest.mark.slow
     # def test_submit_job(self):
     #     client = Client()
@@ -41,6 +40,9 @@ class TestTrainIntegration(TestCase):
     def test_submit_job(self):
         TrainService.submit_job(self.tub_paths)
 
+    @pytest.mark.slow
+    def test_refresh_jobs(self):
+        TrainService.get_latest_job_status_from_hq(self.job_uuids)
 
     @pytest.mark.slow
     def test_upload_job_to_s3(self):

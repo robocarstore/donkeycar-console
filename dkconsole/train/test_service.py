@@ -59,7 +59,7 @@ class TestTrainService(TestCase):
     def test_refresh_job_status(self):
         # TrainService.submit_job(self.tub_paths)
         # jobs = Job.objects.all()
-        job_uuids = ["19460b57-27fa-4e7d-8a79-9434af0f9629"]
+        job_uuids = ["33182080-7621-4766-bc06-1b15e688cc9b"]
 
         # Build up test data
         for uuid in job_uuids:
