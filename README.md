@@ -38,6 +38,14 @@ python manage.py runserver 0.0.0.0:8000
 sudo ln -s gunicorn.service /etc/systemd/system/gunicorn.service
 ```
 
+7. Edit myconfig.py in your carapp 
+
+Add this parameter to `myconfig.py` (likely under ~/mycar) 
+
+```
+AUTO_CREATE_NEW_TUB=True
+```
+
 ## Developer Guide
 
 ### Setup environment
