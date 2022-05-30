@@ -1,25 +1,22 @@
-from django.test import TestCase
-from .services import TrainService
-
-from .models import Job, JobStatus
-import os
-import uuid
-from pathlib import Path
-from django.conf import settings
 import time
+from pathlib import Path
+
 import pytest
-from django.test.client import Client
-from django.urls import reverse
-import json
-from rest_framework import status
+from django.conf import settings
+from django.test import TestCase
+
+from .models import JobStatus
+from .services import TrainService
 
 
 # Create your tests here.
 class TestTrainIntegration(TestCase):
     def setUp(self):
         self.data_dir = Path(settings.DATA_DIR)
-        self.tub_paths = ["/mnt/c/Users/Eugene/Documents/work/donkeycar-console/dkconsole/mycar4_test/data/tub_2_21-12-07"]
-        self.job_uuids = ["", ""]
+        self.tub_paths = [
+            "/mnt/c/Users/Eugene/Documents/work/donkeycar-console/dkconsole/mycar4_test/data/tub_2_21-12-07"]
+        self.job_uuids = ["410a9107-7d28-404e-b0bf-6c13c49a33ab", "a241a201-bdca-4a97-8a3f-67c5c3ea3966"]
+
     # @pytest.mark.slow
     # def test_submit_job(self):
     #     client = Client()
