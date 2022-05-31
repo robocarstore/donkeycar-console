@@ -12,7 +12,7 @@ Xavier NX.
 1. clone the repo under ~
 2. Go into that folder
 
-3. Create a new virtutal environment
+3. Create a new virtual environment
 
 ```
 python3 -m virtualenv -p python3 ~/env_dc --system-site-packages

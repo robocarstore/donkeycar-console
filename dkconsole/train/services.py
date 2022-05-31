@@ -91,7 +91,7 @@ class TrainService():
             else:
                 raise Exception("Failed to call submit job")
         else:
-            raise Exception("Failed to call submit job")
+            raise Exception(f"Failed to call submit job, ERROR {r.status_code}")
 
     @classmethod
     def submit_job_v2(cls, tub_paths):

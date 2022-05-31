@@ -15,7 +15,7 @@ class TestTrainIntegration(TestCase):
         self.data_dir = Path(settings.DATA_DIR)
         self.tub_paths = [
             "/mnt/c/Users/Eugene/Documents/work/donkeycar-console/dkconsole/mycar4_test/data/tub_2_21-12-07"]
-        self.job_uuids = ["410a9107-7d28-404e-b0bf-6c13c49a33ab", "a241a201-bdca-4a97-8a3f-67c5c3ea3966"]
+        self.job_uuids = ["02902f0d-d454-4392-9a96-f587a27aed46", "a241a201-bdca-4a97-8a3f-67c5c3ea3966"]
 
     # @pytest.mark.slow
     # def test_submit_job(self):

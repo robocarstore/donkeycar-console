@@ -94,6 +94,9 @@ class TubServiceV2:
             it = iter(tub)
             for i in range(5):
                 previews.append(next(it)['cam/image_array'])
+        else:
+            cls.delete_tub(tub_path)
+            return None
 
         if 'rating' in tub.manifest.metadata:
             rating = tub.manifest.metadata['rating']
@@ -131,7 +134,8 @@ class TubServiceV2:
             if child.is_dir():
                 try:
                     tub = cls.get_tub(child)
-                    tubs.append(tub)
+                    if tub is not None:
+                        tubs.append(tub)
                 except Exception as e:
                     print(e)
 
