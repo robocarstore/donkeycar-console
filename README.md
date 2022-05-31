@@ -45,7 +45,7 @@ sudo ln -s gunicorn.service /etc/systemd/system/gunicorn.service
 Pls don't use m$ windows
 
 ### WSL2
-```angular2html
+```
 wget get https://repo.anaconda.com/archive/Anaconda3-2021.05-Linux-x86_64.sh
 ./Anaconda*-*-Linux-x86_64.sh
 q
