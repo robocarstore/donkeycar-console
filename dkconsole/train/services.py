@@ -64,13 +64,12 @@ class TrainService():
 
         mp_encoder = MultipartEncoder(
             fields={
-                'device_id': cls.vehicle_service.get_wlan_mac_address(),
+                'device_id': cls.vehicle_service.get_wlan_mac_address() or "Null",
                 'hostname': cls.vehicle_service.get_hostname(),
                 'tub_archive_file': ('file.tar.gz', open(filename, 'rb'), 'application/gzip'),
                 'donkeycar_version': str(vehicle_service.get_donkeycar_version())
             }
         )
-
         logger.debug("Posting job to HQ")
         r = requests.post(
             cls.SUBMIT_JOB_URL,
@@ -92,7 +91,7 @@ class TrainService():
             else:
                 raise Exception("Failed to call submit job")
         else:
-            raise Exception("Failed to call submit job")
+            raise Exception(f"Failed to call submit job, ERROR {r.status_code}")
 
     @classmethod
     def submit_job_v2(cls, tub_paths):

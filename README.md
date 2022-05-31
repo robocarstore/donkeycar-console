@@ -12,7 +12,7 @@ Xavier NX.
 1. clone the repo under ~
 2. Go into that folder
 
-3. Create a new virtutal environment
+3. Create a new virtual environment
 
 ```
 python3 -m virtualenv -p python3 ~/env_dc --system-site-packages
@@ -50,6 +50,15 @@ AUTO_CREATE_NEW_TUB=True
 
 ### Setup environment
 
+Pls don't use m$ windows
+
+### WSL2
+```angular2html
+wget get https://repo.anaconda.com/archive/Anaconda3-2021.05-Linux-x86_64.sh
+./Anaconda*-*-Linux-x86_64.sh
+q
+```
+
 #### Setup conda
 
 ```
@@ -86,6 +95,9 @@ python manage.py runserver 0.0.0.0:8000
 
 ```
 pytest -s -v dkconsole/data/test_service.py -k test_xxx
+
+pytest -s -v dkconsole/train/test_integration.py -k test_submit_job --runslow
+pytest -s -v dkconsole/train/test_integration.py -k test_refresh_jobs --runslow
 ```
 
 ## Changes

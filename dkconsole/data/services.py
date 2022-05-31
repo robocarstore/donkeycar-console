@@ -77,7 +77,8 @@ class TubService:
         if len(jpgs) > 0:
             previews = random.sample(jpgs, 5)
         else:
-            previews = []
+            delete_tub(tub_path)
+            return None
 
         if 'rating' in meta:
             rating = meta['rating']
@@ -104,7 +105,8 @@ class TubService:
             if child.is_dir():
                 try:
                     tub = cls.get_tub(child)
-                    tubs.append(tub)
+                    if tub is not None:
+                        tubs.append(tub)
                 except Exception as e:
                     print(e)
                     pass
