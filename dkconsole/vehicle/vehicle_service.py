@@ -542,6 +542,8 @@ class VehicleService():
                 "AI_THROTTLE_MULT": {"value": 1.0, "dtype": "int", "default": 1.0},
             },
             "Controller": {
+                "JOYSTICK_MAX_THROTTLE": {"dtype": "float", "default": 1.0},
+                "JOYSTICK_THROTTLE_DIR": {"dtype": "float", "default": -1.0},
                 "DRIVE_TRAIN_TYPE": {"dtype": "mc", "choices": ['SERVO_ESC', 'MM1', 'PIGPIO_PWM']},
                 "STEERING_LEFT_PWM": {"dtype": "int", "default": 460},
                 "STEERING_RIGHT_PWM": {"dtype": "int", "default": 290},
