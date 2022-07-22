@@ -180,7 +180,11 @@ def upload_tubs(request):
         serializer = UploadTubSerializer(data=request.data)
         if serializer.is_valid():
             # tub_names = request.data['tub_names']
-            fail, success = tub_service.upload_to_hq(request.data)
+            try:
+                id_token = request.data['id_token']
+            except KeyError:
+                id_token = None
+            fail, success = tub_service.upload_to_hq(request.data, id_token=id_token)
 
             if len(fail) > 0:
                 return Response({'fail': fail, 'success': success}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

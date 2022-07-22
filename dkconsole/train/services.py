@@ -57,7 +57,7 @@ class TrainService():
         return meta['uuid']
 
     @classmethod
-    def submit_job(cls, tub_paths):
+    def submit_job(cls, tub_paths, id_token=None):
         job = cls.create_job(tub_paths)
 
         filename = cls.tub_service.generate_tub_archive(tub_paths)
@@ -75,7 +75,7 @@ class TrainService():
             cls.SUBMIT_JOB_URL,
             data=mp_encoder,  # The MultipartEncoder is posted as data, don't use files=...!
             # The MultipartEncoder provides the content-type header with the boundary:
-            headers={'Content-Type': mp_encoder.content_type}
+            headers={'Content-Type': mp_encoder.content_type, 'Authorization': id_token if id_token else ''},
         )
 
         if r.status_code == status.HTTP_200_OK:
@@ -94,7 +94,7 @@ class TrainService():
             raise Exception(f"Failed to call submit job, ERROR {r.status_code}")
 
     @classmethod
-    def submit_job_v2(cls, tub_paths):
+    def submit_job_v2(cls, tub_paths, id_token=None):
         job = cls.create_job(tub_paths)
         tub_uuids = list(map(cls.get_tub_uuid, tub_paths))
         filename = f"{settings.CARAPP_PATH}/myconfig.py"
@@ -118,7 +118,7 @@ class TrainService():
                 cls.SUBMIT_JOB_URL,
                 data=mp_encoder,  # The MultipartEncoder is posted as data, don't use files=...!
                 # The MultipartEncoder provides the content-type header with the boundary:
-                headers={'Content-Type': mp_encoder.content_type}
+                headers={'Content-Type': mp_encoder.content_type, 'Authorization': id_token if id_token else ''}
             )
 
             if r.status_code == status.HTTP_200_OK:
@@ -189,10 +189,11 @@ class TrainService():
         proc = subprocess.Popen(command)
 
     @classmethod
-    def get_latest_job_status_from_hq(cls, job_uuids):
+    def get_latest_job_status_from_hq(cls, job_uuids, id_token=None):
         print(f"Getting lastest job status for uuid {job_uuids}")
         # job_uuids = [job_uuid for job_uuid in job_uuids if job_uuid]
-        response = requests.post(cls.REFRESH_JOB_STATUS_URL, data={"job_uuids": job_uuids})
+        response = requests.post(cls.REFRESH_JOB_STATUS_URL, data={"job_uuids": job_uuids},
+                                 headers={'Authorization': id_token if id_token else ''})
         if response.status_code == status.HTTP_200_OK:
             return response.json()
         else:
