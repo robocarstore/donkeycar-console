@@ -295,7 +295,7 @@ class TubServiceV2:
             return 'uuid' in meta
 
     @classmethod
-    def upload_to_hq(cls, data):
+    def upload_to_hq(cls, data, id_token=None):
         device_id = cls.vehicle_service.get_wlan_mac_address()
         hostname = cls.vehicle_service.get_hostname()
         fail = []
@@ -321,7 +321,7 @@ class TubServiceV2:
                         cls.UPLOAD_TUB_URL,
                         data=mp_encoder,  # The MultipartEncoder is posted as data, don't use files=...!
                         # The MultipartEncoder provides the content-type header with the boundary:
-                        headers={'Content-Type': mp_encoder.content_type}
+                        headers={'Content-Type': mp_encoder.content_type, 'Authorization': id_token if id_token else ''}
                     )
 
                     if r.status_code == status.HTTP_200_OK and r.json()['uuid']:

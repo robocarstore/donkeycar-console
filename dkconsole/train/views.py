@@ -32,12 +32,16 @@ def submit_job(request):
 
         if serializer.is_valid():
             tub_paths = request.data['tub_paths']
+            try:
+                id_token = request.data['idToken']
+            except KeyError:
+                id_token = None
 
             try:
                 if not request.data['v2']:
-                    TrainService.submit_job(tub_paths)
+                    TrainService.submit_job(tub_paths, id_token=id_token)
                 else:
-                    TrainService.submit_job_v2(tub_paths)
+                    TrainService.submit_job_v2(tub_paths, id_token=id_token)
             except KeyError:
                 TrainService.submit_job(tub_paths)
 
