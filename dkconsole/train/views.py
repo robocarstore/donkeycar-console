@@ -33,7 +33,7 @@ def submit_job(request):
         if serializer.is_valid():
             tub_paths = request.data['tub_paths']
             try:
-                id_token = request.data['idToken']
+                id_token = request.data['id_token']
             except KeyError:
                 id_token = None
 

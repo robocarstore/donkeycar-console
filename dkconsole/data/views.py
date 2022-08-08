@@ -183,6 +183,7 @@ def upload_tubs(request):
             try:
                 id_token = request.data['id_token']
             except KeyError:
+                print("id_token not found")
                 id_token = None
             fail, success = tub_service.upload_to_hq(request.data, id_token=id_token)
 
