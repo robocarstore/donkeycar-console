@@ -2,7 +2,8 @@
 
 This is a management software of the donkey car software that provides
 rest-based API to support Donkey Car mobile app. This software currenly supports
-RPI 4B only. We welcome any contribution to make it work with Jetson Nano /
+RPI 4B only. We welcome any contribution to make it work with 
+Jetson Nano /
 Xavier NX.
 
 # How to deploy this app

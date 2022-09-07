@@ -28,5 +28,6 @@ urlpatterns = [
     path('power_off', views.power_off, name='power_off'),
     path('reboot', views.reboot, name='reboot'),
     path('factory_reset', views.factory_reset, name='factory_reset'),
+    path('auth', views.check_password, name='auth'),
 
 ]

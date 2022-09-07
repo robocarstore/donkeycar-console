@@ -48,6 +48,15 @@ def stop_driving(request):
     return Response({"status": True})
 
 
+@api_view(['POST'])
+def check_password(request):
+    password = request.data['password']
+    if password == "settings.DRIVE_PASSWORD":
+        return Response({"status": True})
+    else:
+        return Response({"status": True})
+
+
 @api_view(['GET'])
 def status(request):
     hostname = vehicle_service.get_hostname()
