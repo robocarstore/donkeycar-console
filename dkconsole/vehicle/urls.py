@@ -29,5 +29,6 @@ urlpatterns = [
     path('reboot', views.reboot, name='reboot'),
     path('factory_reset', views.factory_reset, name='factory_reset'),
     path('auth', views.check_password, name='auth'),
+    path('set_password', views.set_password, name='set_password'),
 
 ]

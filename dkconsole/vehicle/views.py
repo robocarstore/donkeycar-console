@@ -57,6 +57,13 @@ def check_password(request):
         return Response({"status": True})
 
 
+@api_view(['POST'])
+def set_password(request):
+    password = request.data['password']
+    # settings.DRIVE_PASSWORD = password
+    return Response({"status": True})
+
+
 @api_view(['GET'])
 def status(request):
     hostname = vehicle_service.get_hostname()
@@ -73,7 +80,8 @@ def status(request):
                      "current_ssid": vehicle_service.get_current_ssid(),
                      "battery_level": vehicle_service.battery_level_in_percentage(),
                      "web_controller_port": vehicle_service.get_web_controller_port(),
-                     "donkeycar_version": str(vehicle_service.get_donkeycar_version())
+                     "donkeycar_version": str(vehicle_service.get_donkeycar_version()),
+                     "support_password_login": True,
                      })
 
 
