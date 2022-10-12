@@ -96,6 +96,32 @@ class VehicleService():
         return data
 
     @classmethod
+    def support_auth(cls):
+        if cls.get_password() is None:
+            return False
+        else:
+            return True
+
+    @classmethod
+    def get_password(cls):
+        cfg_dir = Path(cls.carapp_path).parents[0]
+        cfg_file_path = cfg_dir / "donkey.cfg"
+
+        try:
+            import configparser
+
+            with open(cfg_file_path, 'r') as f:
+                config_string = '[donkey_config]\n' + f.read()
+                config = configparser.ConfigParser()
+                config.read_string(config_string)
+
+            password = config['donkey_config']['PASSWORD']
+        except:
+            password = None
+
+        return password
+
+    @classmethod
     def start_calibrate(cls):
         if cls.calibrate_proc is not None:
             cls.stop_calibrate()

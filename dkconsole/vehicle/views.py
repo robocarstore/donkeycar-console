@@ -50,11 +50,21 @@ def stop_driving(request):
 
 @api_view(['POST'])
 def check_password(request):
-    password = request.data['password']
-    if password == "settings.DRIVE_PASSWORD":
-        return Response({"status": True})
+    if 'password' in request.data:
+        logger.info(f"request.data['password'] =  {request.data['password']}")
+
+        supplied_password = request.data['password']
+        system_password = vehicle_service.get_password()
+
+        logger.info(f"Comparing {supplied_password} vs {system_password}")
+        logger.info(f"{supplied_password == system_password}")
+
+        if supplied_password == system_password:
+            return Response({"status": True})
+        else:
+            return Response({"status": False})
     else:
-        return Response({"status": True})
+        return Response({"status": False})
 
 
 @api_view(['POST'])
@@ -81,7 +91,7 @@ def status(request):
                      "battery_level": vehicle_service.battery_level_in_percentage(),
                      "web_controller_port": vehicle_service.get_web_controller_port(),
                      "donkeycar_version": str(vehicle_service.get_donkeycar_version()),
-                     "support_password_login": True,
+                     "support_password_login": vehicle_service.support_auth(),
                      })
 
 
