@@ -54,7 +54,7 @@ def check_password(request):
     if password == "settings.DRIVE_PASSWORD":
         return Response({"status": True})
     else:
-        return Response({"status": False})
+        return Response({"status": True})
 
 
 @api_view(['POST'])
