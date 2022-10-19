@@ -97,24 +97,41 @@ class VehicleService():
 
     @classmethod
     def support_auth(cls):
-        if cls.get_password() is None:
+        if cls.is_mobile_app_password_disabled():
+            return False
+        elif cls.get_password() is None:
             return False
         else:
             return True
 
     @classmethod
-    def get_password(cls):
+    def read_config_file(cls):
         cfg_dir = Path(cls.carapp_path).parents[0]
         cfg_file_path = cfg_dir / "donkey.cfg"
 
+        import configparser
+
+        with open(cfg_file_path, 'r') as f:
+            config_string = '[donkey_config]\n' + f.read()
+            config = configparser.ConfigParser()
+            config.read_string(config_string)
+
+        return config
+
+    @classmethod
+    def is_mobile_app_password_disabled(cls):
         try:
-            import configparser
+            config = cls.read_config_file()
+            is_disabled = config['donkey_config']['DISABLE_MOBILE_APP_PASSWORD'] == "true"
+        except:
+            is_disabled = True
 
-            with open(cfg_file_path, 'r') as f:
-                config_string = '[donkey_config]\n' + f.read()
-                config = configparser.ConfigParser()
-                config.read_string(config_string)
+        return is_disabled
 
+    @classmethod
+    def get_password(cls):
+        try:
+            config = cls.read_config_file()
             password = config['donkey_config']['PASSWORD']
         except:
             password = None
