@@ -42,7 +42,7 @@ LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
     "formatters": {
-        "verbose": {
+        "simple": {
             "format": "%(asctime)s %(levelname)-6s %(module)s.py %(funcName)s() line %(lineno)d %(message)s"
         }
     },
@@ -50,7 +50,7 @@ LOGGING = {
         "console": {
             "level": "DEBUG",
             "class": "logging.StreamHandler",
-            "formatter": "verbose",
+            "formatter": "simple",
         },
         "app_debug_log": {
             'level': 'DEBUG',
@@ -61,7 +61,6 @@ LOGGING = {
             'formatter': 'simple'
         }
     },
-    # "root": {"level": "INFO", "handlers": ["console"]},
     'loggers': {
         'dkconsole': {
             'handlers': ['console', 'app_debug_log'],
