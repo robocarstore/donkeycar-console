@@ -10,10 +10,12 @@ from dkconsole.service_factory import factory
 from dkconsole.util import *
 from .serializers import TubSerializer, MetaSerializer, UploadTubSerializer
 
+import logging
+
 # Create your views here.
 
 tub_service = factory.create('tub_service')
-
+logger = logging.getLogger(__name__)
 
 @api_view(['GET'])
 def index(request):
@@ -176,16 +178,19 @@ def upload_tubs(request):
     endpoint for mobile app
     """
     try:
-        print(request.data)
+        logger.info("Uploading tubs")
+        logger.debug(request.data)
         serializer = UploadTubSerializer(data=request.data)
         if serializer.is_valid():
             # tub_names = request.data['tub_names']
             try:
                 id_token = request.data['id_token']
             except KeyError:
-                print("id_token not found")
+                logger.info("id_token not found")
                 id_token = None
             fail, success = tub_service.upload_to_hq(request.data, id_token=id_token)
+            logger.debug(f"fail: {fail}, success: {success}")
+
 
             if len(fail) > 0:
                 return Response({'fail': fail, 'success': success}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

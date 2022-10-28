@@ -27,6 +27,8 @@ from dkconsole.service_factory import factory
 # https://docs.djangoproject.com/en/dev/ref/settings/#logging
 # See https://docs.djangoproject.com/en/dev/topics/logging for
 # more details on how to customize your logging configuration.
+log_filename = "logs/output.log"
+os.makedirs(os.path.dirname(log_filename), exist_ok=True)
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
