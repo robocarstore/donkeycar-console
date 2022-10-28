@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import donkeycar
 import os
+import pwd
+import grp
 import environ
 import logging
 
@@ -27,8 +29,15 @@ from dkconsole.service_factory import factory
 # https://docs.djangoproject.com/en/dev/ref/settings/#logging
 # See https://docs.djangoproject.com/en/dev/topics/logging for
 # more details on how to customize your logging configuration.
+
+# Create the logs folder and setup proper permission
 log_filename = "logs/output.log"
-os.makedirs(os.path.dirname(log_filename), exist_ok=True)
+log_folder_path = os.path.dirname(log_filename)
+os.makedirs(log_folder_path, exist_ok=True)
+uid = pwd.getpwnam("pi").pw_uid
+gid = grp.getgrnam("pi").gr_gid
+os.chown(log_folder_path, uid, gid)
+
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
