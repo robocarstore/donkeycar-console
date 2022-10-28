@@ -32,9 +32,7 @@ LOGGING = {
     "disable_existing_loggers": False,
     "formatters": {
         "verbose": {
-            "format": "%(asctime)s  %(name)s line %(lineno)d  "
-            "%(levelname)s: %(message)s",
-            'datefmt': '%Y-%m-%d %H:%M:%S'
+            "format": "%(asctime)s %(levelname)-6s %(module)s.py %(funcName)s() line %(lineno)d %(message)s"
         }
     },
     "handlers": {
@@ -42,12 +40,20 @@ LOGGING = {
             "level": "DEBUG",
             "class": "logging.StreamHandler",
             "formatter": "verbose",
+        },
+        "app_debug_log": {
+            'level': 'DEBUG',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': 'logs/app.debug.log',
+            'maxBytes': 1024*1024*10, # 10MB
+            'backupCount': 10,
+            'formatter': 'simple'
         }
     },
-    "root": {"level": "INFO", "handlers": ["console"]},
+    # "root": {"level": "INFO", "handlers": ["console"]},
     'loggers': {
         'dkconsole': {
-            'handlers': ['console'],
+            'handlers': ['console', 'app_debug_log'],
             'level': 'DEBUG',
             'propagate': False
         }

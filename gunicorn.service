@@ -12,6 +12,7 @@ WorkingDirectory = /opt/donkeycar-console
 ExecStartPre = /bin/mkdir /run/dkconsole
 ExecStartPre = /bin/chown -R pi:pi /run/dkconsole
 ExecStartPre = -/usr/bin/git pull
+ExecStartPre = /bin/mkdir /opt/donkeycar-console/logs
 ExecStartPre = /bin/chown -R pi:pi /opt/donkeycar-console
 ExecStartPre = /home/pi/env/bin/python manage.py migrate
 
