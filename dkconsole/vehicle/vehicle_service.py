@@ -422,17 +422,9 @@ class VehicleService():
 
     @classmethod
     def first_time(cls):
-        path = cls.carapp_path + "/setup.json"
-        if (os.path.exists(path)):
-            with open(path, 'r') as f:
-                data = json.load(f)
-                return data['isFirstTime']
-        else:
-            with open(path, 'w+') as f:
-                output = {}
-                output['isFirstTime'] = True
-                json.dump(output, f)
-                return True
+        # We are depreciating the first time setup screen because it causes more problems than bringing benefits
+        # Always return false
+        return False
 
     @classmethod
     def write_setup_file_to_disk(cls):
