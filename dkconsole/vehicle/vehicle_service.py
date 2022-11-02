@@ -635,7 +635,7 @@ class VehicleService():
             search = re.search(rf'^#*\s*{key}\s*=\s*([^#]*)#*.*$', line)
 
             if search and search.groups():
-                value_str = re.sub(r'["\s]', "", search.groups()[0])
+                value_str = re.sub(r'[\'"\s]', "", search.groups()[0])
                 if cls.is_number(value_str):
                     value = cls.to_num(value_str)
                 else:
