@@ -28,7 +28,7 @@ class MyAppConfig(AppConfig):
         if (donkeycar_major_version == 3):
             from dkconsole.data.services import TubService
             factory.register('tub_service', TubService)
-        elif (donkeycar_major_version == 4):
+        elif (donkeycar_major_version == 4 or donkeycar_major_version == 5):
             from dkconsole.data.data_service_v2 import TubServiceV2
             factory.register('tub_service', TubServiceV2)
         else:

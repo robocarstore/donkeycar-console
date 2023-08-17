@@ -83,7 +83,7 @@ if (env.str('mode', None) == 'docker'):
     print("loading form .env_docker")
     env.read_env(str(ROOT_DIR / ".env_docker"))
 else:
-    if os.uname()[4] == 'armv7l':
+    if os.uname()[4] in ('armv7l', 'aarch64'):
     # if platform.uname() == 'armv7l': # for windows only
         print("loading form .env_pi4")
 

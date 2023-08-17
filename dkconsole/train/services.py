@@ -104,7 +104,7 @@ class TrainService():
                 ('myconfig_file', ('myconfig.py', open(filename, 'rb'), 'text/plain')),
                 ('device_id', cls.vehicle_service.get_wlan_mac_address()),
                 ('hostname', cls.vehicle_service.get_hostname()),
-                ('donkeycar_version', str(vehicle_service.get_donkeycar_version())),
+                ('donkeycar_version', "4.3.22"),
             ]
             for _ in tub_uuids:
                 data.append(('tub_uuids', _))

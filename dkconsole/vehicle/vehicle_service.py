@@ -83,6 +83,9 @@ class VehicleService():
         if model_path:
             command.append(f"--model={model_path}")
 
+        if model_path.endswith('.tflite'):
+            command.append("--type=tflite_linear")
+
         logger.debug(" ".join(command))
 
         return command
