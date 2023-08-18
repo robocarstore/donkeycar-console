@@ -104,7 +104,7 @@ class TrainService():
                 ('myconfig_file', ('myconfig.py', open(filename, 'rb'), 'text/plain')),
                 ('device_id', cls.vehicle_service.get_wlan_mac_address()),
                 ('hostname', cls.vehicle_service.get_hostname()),
-                ('donkeycar_version', "4.3.22"),
+                ('donkeycar_version', str(vehicle_service.get_donkeycar_version())),
             ]
             for _ in tub_uuids:
                 data.append(('tub_uuids', _))
@@ -172,6 +172,7 @@ class TrainService():
     def download_model(cls, job):
         print(type(cls.MODEL_DIR))
         cls.download_file(job.model_url, f"{cls.MODEL_DIR}/job_{job.id}.h5")
+        cls.download_file(job.model_url, f"{cls.MODEL_DIR}/job_{job.id}.tflite")
         cls.download_file(job.model_accuracy_url, f"{cls.MODEL_DIR}/job_{job.id}.png")
         # cls.download_file(job.model_myconfig_url, f"{cls.MODEL_DIR}/job_{job.id}.myconfig.py")
 
