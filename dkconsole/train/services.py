@@ -1,7 +1,7 @@
 import json
 import logging
 import os
-import subprocess
+import subprocess, multiprocessing
 import uuid
 from pathlib import Path
 
@@ -171,8 +171,18 @@ class TrainService():
     @classmethod
     def download_model(cls, job):
         print(type(cls.MODEL_DIR))
-        cls.download_file(job.model_url, f"{cls.MODEL_DIR}/job_{job.id}.h5")
-        cls.download_file(job.model_url, f"{cls.MODEL_DIR}/job_{job.id}.tflite")
+        if vehicle_service.get_donkeycar_version().major == 4:
+            cls.download_file(job.model_url, f"{cls.MODEL_DIR}/job_{job.id}.h5")
+        elif vehicle_service.get_donkeycar_version().major == 5:
+            def download_and_unzip_savedmodel(url, filepath, jobid):
+                os.system(" ".join(["curl", "--fail", url, "--output", filepath]))
+                os.system(f"tar -xzf {filepath} -C {os.path.dirname(filepath)} -k")
+                os.remove(filepath)
+                os.rename(f"{cls.MODEL_DIR}/model.savedmodel", f"{cls.MODEL_DIR}/job_{jobid}.savedmodel")
+            if os.path.exists(f"{cls.MODEL_DIR}/model.savedmodel"):
+                os.rmtree(f"{cls.MODEL_DIR}/model.savedmodel")
+            multiprocessing.Process(target=download_and_unzip_savedmodel, args=(job.model_url, f"{cls.MODEL_DIR}/job_{job.id}.tar.gz", job.id)).start()
+        cls.download_file(job.model_url.rstrip('h5')+"tflite", f"{cls.MODEL_DIR}/job_{job.id}.tflite")
         cls.download_file(job.model_accuracy_url, f"{cls.MODEL_DIR}/job_{job.id}.png")
         # cls.download_file(job.model_myconfig_url, f"{cls.MODEL_DIR}/job_{job.id}.myconfig.py")
 

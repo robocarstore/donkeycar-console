@@ -8,6 +8,7 @@ from dkconsole.service_factory import factory
 from django.conf import settings
 from rest_framework import status
 import time
+import os, glob
 import logging
 from .vehicle_service import VehicleService
 
@@ -37,6 +38,15 @@ def start_autopilot(request):
     model_path = request.data['model_path']
     use_joystick = request.data['use_joystick']
 
+    if not os.path.exists(model_path):
+        try:
+            dirname, filename = os.path.split(model_path)
+            filename = os.path.splitext(filename)[0]
+            model_path = glob.glob(os.path.join(dirname, f"{filename}.*"))[0]
+            logger.debug("Default model_path not found, selected {model_path} instead")
+        except IndexError:
+            raise FileNotFoundError(f"Model file specified: {model_path} not found")
+        
     pid = vehicle_service.start_autopilot(use_joystick, model_path)
 
     return Response({"status": True})

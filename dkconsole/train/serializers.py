@@ -19,7 +19,7 @@ class JobSerializer(serializers.ModelSerializer):
 
     def get_model_path(self, job):
         if job.model_url is not None:
-            return settings.MODEL_DIR + f"/job_{job.id}.h5"
+            return settings.MODEL_DIR + f"/job_{job.id}.tflite"
         else:
             return None
 

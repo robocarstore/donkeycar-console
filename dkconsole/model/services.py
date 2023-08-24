@@ -29,7 +29,7 @@ class MLModelService():
         paths = sorted(Path(model_dir).iterdir(), key=os.path.getmtime, reverse=True)
 
         for path in paths:
-            if path.is_file() and (path.name.endswith(".h5") or path.name.endswith(".tflite")):
+            if (path.is_file() and (path.name.endswith(".h5") or path.name.endswith(".tflite"))) or path.name.endswith(".savedmodel"):
                 modelFile = path
                 model_meta_path = cls.get_meta_json(os.path.splitext(modelFile)[0])
                 if os.path.exists(model_meta_path):
