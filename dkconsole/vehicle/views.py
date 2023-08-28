@@ -39,12 +39,13 @@ def start_autopilot(request):
     use_joystick = request.data['use_joystick']
 
     if not os.path.exists(model_path):
-        try:
-            dirname, filename = os.path.split(model_path)
-            filename = os.path.splitext(filename)[0]
-            model_path = glob.glob(os.path.join(dirname, f"{filename}.*"))[0]
-            logger.debug("Default model_path not found, selected {model_path} instead")
-        except IndexError:
+        dirname, filename = os.path.split(model_path)
+        filename = os.path.splitext(filename)[0]
+        model_files = glob.glob(os.path.join(dirname, f"{filename}.*"))
+        valid_extensions = [".savedmodel", ".h5", ".tflite"]
+        model_path = next((file for file in model_files if any(file.endswith(ext) for ext in valid_extensions)), None)
+        
+        if model_path is None:
             raise FileNotFoundError(f"Model file specified: {model_path} not found")
         
     pid = vehicle_service.start_autopilot(use_joystick, model_path)

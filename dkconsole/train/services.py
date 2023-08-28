@@ -1,6 +1,6 @@
 import json
 import logging
-import os
+import os, shutil
 import subprocess, multiprocessing
 import uuid
 from pathlib import Path
@@ -176,11 +176,14 @@ class TrainService():
         elif vehicle_service.get_donkeycar_version().major == 5:
             def download_and_unzip_savedmodel(url, filepath, jobid):
                 os.system(" ".join(["curl", "--fail", url, "--output", filepath]))
-                os.system(f"tar -xzf {filepath} -C {os.path.dirname(filepath)} -k")
+                if os.path.exists(f"{cls.MODEL_DIR}/.job_{jobid}.savedmodel.temp"):
+                    shutil.rmtree(f"{cls.MODEL_DIR}/.job_{jobid}.savedmodel.temp")
+                os.mkdir(f"{cls.MODEL_DIR}/.job_{jobid}.savedmodel.temp")
+                os.system(f"tar -xzf {filepath} -C {os.path.dirname(filepath)}/.job_{jobid}.savedmodel.temp -k")
                 os.remove(filepath)
-                os.rename(f"{cls.MODEL_DIR}/model.savedmodel", f"{cls.MODEL_DIR}/job_{jobid}.savedmodel")
-            if os.path.exists(f"{cls.MODEL_DIR}/model.savedmodel"):
-                os.rmtree(f"{cls.MODEL_DIR}/model.savedmodel")
+                os.rename(f"{cls.MODEL_DIR}/.job_{jobid}.savedmodel.temp/model.savedmodel",
+                           f"{cls.MODEL_DIR}/job_{jobid}.savedmodel")
+                shutil.rmtree(f"{cls.MODEL_DIR}/.job_{jobid}.savedmodel.temp")
             multiprocessing.Process(target=download_and_unzip_savedmodel, args=(job.model_url, f"{cls.MODEL_DIR}/job_{job.id}.tar.gz", job.id)).start()
         cls.download_file(job.model_url.rstrip('h5')+"tflite", f"{cls.MODEL_DIR}/job_{job.id}.tflite")
         cls.download_file(job.model_accuracy_url, f"{cls.MODEL_DIR}/job_{job.id}.png")
