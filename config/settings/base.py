@@ -34,9 +34,13 @@ from dkconsole.service_factory import factory
 log_filename = "logs/output.log"
 log_folder_path = os.path.dirname(log_filename)
 os.makedirs(log_folder_path, exist_ok=True)
-uid = pwd.getpwnam("pi").pw_uid
-gid = grp.getgrnam("pi").gr_gid
-os.chown(log_folder_path, uid, gid)
+
+try:
+    uid = pwd.getpwnam("pi").pw_uid
+    gid = grp.getgrnam("pi").gr_gid
+    os.chown(log_folder_path, uid, gid)
+except:
+    pass
 
 LOGGING = {
     "version": 1,
