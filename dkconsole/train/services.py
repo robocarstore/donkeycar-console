@@ -170,7 +170,7 @@ class TrainService():
 
     @classmethod
     def download_model(cls, job):
-        print(type(cls.MODEL_DIR))
+        logger.info(type(cls.MODEL_DIR))
         if vehicle_service.get_donkeycar_version().major == 4:
             cls.download_file(job.model_url, f"{cls.MODEL_DIR}/job_{job.id}.h5")
         elif vehicle_service.get_donkeycar_version().major == 5:
@@ -187,6 +187,8 @@ class TrainService():
             multiprocessing.Process(target=download_and_unzip_savedmodel, args=(job.model_url, f"{cls.MODEL_DIR}/job_{job.id}.tar.gz", job.id)).start()
         cls.download_file(job.model_url.rstrip('h5')+"tflite", f"{cls.MODEL_DIR}/job_{job.id}.tflite")
         cls.download_file(job.model_accuracy_url, f"{cls.MODEL_DIR}/job_{job.id}.png")
+        cls.download_file(job.train_log, f"{cls.MODEL_DIR}/job_{job.id}.log")
+
         # cls.download_file(job.model_myconfig_url, f"{cls.MODEL_DIR}/job_{job.id}.myconfig.py")
 
         if not os.path.isdir(cls.MOVIE_DIR):

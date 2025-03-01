@@ -74,7 +74,6 @@ LOGGING = {
     }
 }
 
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 env = environ.Env()
@@ -98,7 +97,7 @@ else:
     else:
         if (donkeycar_version.major == 3):
             env.read_env(str(ROOT_DIR / ".env_pc_v3"))
-        elif (donkeycar_version.major == 4):
+        elif (donkeycar_version.major in [4, 5]):
             env.read_env(str(ROOT_DIR / ".env_pc_v4"))
         else:
             raise Exception("unknown donkey car version")

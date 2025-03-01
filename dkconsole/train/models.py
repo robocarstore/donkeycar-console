@@ -33,6 +33,18 @@ class Job(models.Model):
     model_movie_url = models.CharField(max_length=2000, null = True)
     uuid = models.UUIDField(null=True, blank=True)
 
+    @property
+    def train_log(self):
+        """
+        Returns the path to the training log file.
+        Derives it from model_accuracy_url by replacing 'model.png' with 'train.log'
+        """
+        if not self.model_accuracy_url:
+            return None
+
+        # Replace model.png with train.log
+        return self.model_accuracy_url.replace('model.png', 'train.log')
+
     class Meta:
         ordering = ['-created_at']
 
